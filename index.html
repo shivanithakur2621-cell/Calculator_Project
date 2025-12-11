@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Calculator</title>
+</head>
+<body>
+
+<div class="calc-box">
+    <form method="POST">
+        <input type="text" class="display" name="expression" placeholder="0"
+               value="{{ result }}" required>
+
+        <div class="keys">
+            <button type="button" onclick="add('7')">7</button>
+            <button type="button" onclick="add('8')">8</button>
+            <button type="button" onclick="add('9')">9</button>
+            <button type="button" class="op" onclick="add('+')">+</button>
+
+            <button type="button" onclick="add('4')">4</button>
+            <button type="button" onclick="add('5')">5</button>
+            <button type="button" onclick="add('6')">6</button>
+            <button type="button" class="op" onclick="add('-')">-</button>
+
+            <button type="button" onclick="add('1')">1</button>
+            <button type="button" onclick="add('2')">2</button>
+            <button type="button" onclick="add('3')">3</button>
+            <button type="button" class="op" onclick="add('*')">x</button>
+
+            <!-- FIXED AC BUTTON -->
+            <button type="button" class="clear" onclick="clearDisplay()">AC</button>
+            <button type="button" onclick="add('0')">0</button>
+            <button type="submit" class="equal">=</button>
+            <button type="button" class="op" onclick="add('/')">/</button>
+        </div>
+    </form>
+
+    <!-- History Button -->
+    <button class="history-btn" onclick="toggleHistory()">Show History</button>
+
+    <!-- History Box -->
+    <div id="historyContainer" class="history-box" style="display:none;">
+        {% for item in history %}
+            {{ item }}<br>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function add(val) {
+    document.querySelector(".display").value += val;
+}
+
+function toggleHistory() {
+    let box = document.getElementById("historyContainer");
+    let btn = document.querySelector(".history-btn");
+
+    if (box.style.display === "none") {
+        box.style.display = "block";
+        btn.innerText = "Hide History";
+    } else {
+        box.style.display = "none";
+        btn.innerText = "Show History";
+    }
+}
+
+function clearDisplay() {
+    document.querySelector(".display").value = "";  // clear screen
+    window.location.href = "/";  // reload page to remove old result
+}
+</script>
+
+</body>
+</html>
